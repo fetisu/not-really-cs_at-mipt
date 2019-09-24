@@ -4,4 +4,4 @@ Meow as a religion
 eeeeew
 
 
-Please, do read this: making a wallpaper in lab3 takes some time, just wait
+Please, do note that making a wallpaper in lab3 takes some time, just wait
