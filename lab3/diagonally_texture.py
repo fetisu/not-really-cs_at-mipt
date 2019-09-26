@@ -1,4 +1,5 @@
-from graph import *
+from graph import windowSize, brushColor, penColor,\
+    rectangle, run
 import random
 
 
@@ -21,7 +22,7 @@ for i in range(250):
                 R = (m[i-1][j][0] + m[i][j-1][0])//2
                 G = (m[i-1][j][1] + m[i][j-1][1])//2
                 B = (m[i-1][j][2] + m[i][j-1][2])//2
-                if i%25 == 0 and j%25 == 0:
+                if i % 25 == 0 and j % 25 == 0:
                     R += 20
                     G += 20
                     B += 20
@@ -48,7 +49,7 @@ for i in range(250):
         m[i][j] = [R, G, B]
         brushColor(R, G, B)
         penColor(R, G, B)
-        rectangle(2*i, 2*j, 2*i + 2, 2*j + 2)
+        rectangle(2 * i, 2 * j, 2 * i + 2, 2 * j + 2)
 
 
 run()

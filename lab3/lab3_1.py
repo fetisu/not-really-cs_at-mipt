@@ -1,4 +1,5 @@
-from graph import *
+from graph import windowSize, brushColor, penColor,\
+    rectangle, polygon, circle, run
 import random
 
 
@@ -20,14 +21,14 @@ def sheep(x, y, n, mod):
     penColor('black')
     rectangle(mod * n * (3 / 4) + x, y, mod * n + x, y - (2 / 2) * n)
     brushColor('light grey')
-    rectangle(x, + n / 2 + y, x + n*mod, y - n * (1 / 2))
+    rectangle(x, + n / 2 + y, x + n * mod, y - n * (1 / 2))
     polygon(coordintes)
     brushColor('grey')
     circle(x + mod * n/4, y - 0.25*n, n//6)
     brushColor("light grey")
     penColor("light grey")
-    circle(x + (n + n//7)*mod, y - 1.5*n, n//8)
-    circle(x + (n + n //2)*mod, y - 2.0 * n, n // 7)
+    circle(x + (n + n // 7)*mod, y - 1.5 * n, n // 8)
+    circle(x + (n + n // 2)*mod, y - 2.0 * n, n // 7)
     circle(x + mod * 2.2*n, y - 2.5 * n, n // 6)
 
 
@@ -96,7 +97,8 @@ for i in range(1000):
 # sheep
 number_of = random.randint(4, 8)
 for i in range(number_of):
-    sheep(random.randint(10, 450), randint(10, 490), randint(15, 40), randint(0, 1) * 2 - 1)
+    sheep(random.randint(10, 450), random.randint(10, 490),
+          random.randint(15, 40), random.randint(0, 1) * 2 - 1)
 
 
 run()

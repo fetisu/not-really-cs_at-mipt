@@ -1,4 +1,5 @@
-from graph import *
+from graph import windowSize, brushColor, penColor,\
+    circle, run, penSize, line
 
 windowSize(400, 400)
 
