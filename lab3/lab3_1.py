@@ -41,9 +41,6 @@ B0 = 255
 m = [[0] * 500 for i in range(500)]
 
 
-aa = 0
-
-
 # diagonally_wallpaper
 for i in range(1000):
     a = i
@@ -91,10 +88,8 @@ for i in range(1000):
         brushColor(R, G, B)
         penColor(R, G, B)
         rectangle(2 * x, 2 * y, 2 * x + 2, 2 * y + 2)
-        aa += 1
 
 
-# sheep
 number_of = random.randint(4, 8)
 for i in range(number_of):
     sheep(random.randint(10, 450), random.randint(10, 490),
