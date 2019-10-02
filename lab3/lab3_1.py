@@ -96,7 +96,7 @@ def the_wallpaper(r0, g0, b0):
                 x = diagonal_number - almost_y
                 y = almost_y
 
-            # for the first column and line just making them standart
+            # for the first column and line just making them standard
             if x == 0:
                 R, G, B = r0, g0, b0
 
