@@ -1,5 +1,6 @@
 from math import sin, cos
 from typing import Tuple, List
+from random import randint
 
 from graph import penSize, penColor, brushColor, moveObjectBy, changeCoords
 from graph import polygon, circle, line, rectangle, point
@@ -204,24 +205,32 @@ move_by(fish3, 330, 620)
 
 # Birds
 bird1 = bird(scale=2, angle=0.2)
+bird2 = bird(scale=1, angle=-0.2)
+bird3 = bird(scale=2, angle=0.1)
+bird4 = bird(scale=1, angle=-0.05)
+bird5 = bird(scale=0.5, angle=0.04)
+bird6 = bird(scale=1, angle=-0.02)
+birds = [bird1, bird2, bird3, bird4, bird5, bird6]
 move_by(bird1, 100, 100)
-move_by(bird(scale=1, angle=-0.2), 530, 130)
-move_by(bird(scale=2, angle=0.1), 260, 170)
-move_by(bird(scale=1, angle=-0.05), 130, 450)
-move_by(bird(scale=0.5, angle=0.04), 410, 200)
-move_by(bird(scale=1, angle=-0.02), 500, 210)
+move_by(bird2, 530, 130)
+move_by(bird3, 260, 170)
+move_by(bird4, 130, 450)
+move_by(bird5, 410, 200)
+move_by(bird6, 500, 210)
 move_by(bird(scale=2, angle=0.26), 290, 290)
 move_by(bird(scale=2.5, angle=0.3), 490, 390)
 move_by(bird(scale=0.3, angle=-0.1), 50, 190)
 
 
 def timerfun():
-    move_by(sw1, 0.3, -0.6)
+    move_by(sw1, randint(-2, 6), randint(-4, 2))
     move_by(sw2, -0.1, -0.4)
     move_by(sw3, 0.5, 0.5)
     move_by(fish1, 0.5, 0)
     move_by(fish2, 0.3, 0.05)
     move_by(fish3, 0.7, 0.2)
+    for birdi in birds:
+        move_by(birdi, randint(-1, 1), randint(-3, 3))
 
 
 onTimer(timerfun, 100)
