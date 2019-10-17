@@ -4,8 +4,8 @@ from math import cos, sin
 
 root = Tk()
 width = 800
-height = 630
-root.geometry(str(width)+'x'+str(height))
+height = 600
+root.geometry(str(width) + 'x' + str(height + 30))
 
 # the game field
 canvas_canvasov = Canvas(root, bg='#cdffff', width=width, height=600)
@@ -19,15 +19,15 @@ canvas_down_background.place(x=0, y=600)
 entered_name = StringVar()
 name_entry = Entry(root, width=20, textvariable=entered_name, bg='#d8f7f6')
 name_entry.insert(END, 'noname')
-name_entry.place(x=325, y=605)
+name_entry.place(x=325, y=height + 5)
 
 # text for bottom board
-text = Label(root, text='Please, enter your name for the scores table:3',
-             bg='#d8f7f6')
-text.place(x=10, y=605)
+text_first = Label(root, text='Please, enter your name for the scores table:3',
+                   bg='#d8f7f6')
+text_first.place(x=10, y=height + 5)
 text_second = Label(root, text="and do it before scoring 50, or don't do at all",
                     bg='#d8f7f6')
-text_second.place(x=500, y=605)
+text_second.place(x=500, y=height + 5)
 
 # basic design colours
 ball_colors = ['#ff9ea3', '#ffbe9e', '#ff9ed0', '#e4a3fa',
@@ -41,19 +41,19 @@ for line in scores_file:
     persons_score = line.split()
     best_results[persons_score[0]] = persons_score[1]
 scores_file.close()
-lowest_best_score = 50
 
 # all the global variables
 number_of_wins = 0
 balls = []
 ovals = []
-how_long_the_same_set = 1000
+time_counter = 1000  # for changing set of balls after some time
 timer_time = 5
+lowest_best_score = 50
 
 # explaining the game text
-canvas_canvasov.create_text(150, 50, text='Hi there. This game is very simple \n'
-                                          'Every click inside a ball is a meow \n'
-                                          'The more meows the better')
+canvas_canvasov.create_text(0.2 * width, 0.1 * height, text='Hi there. This game is very simple \n'
+                                                            'Every click inside a ball is a meow \n'
+                                                            'The more meows the better')
 
 
 class Ball(object):
@@ -88,13 +88,14 @@ class Ball(object):
 
 class Oval(object):
 
-    def __init__(self, x, y, dx, dy, color):
+    def __init__(self, x, y, dx, dy, color, oval_mode):
         self.canv = canvas_canvasov.create_oval(x, y, x + dx, y + dy,
                                                 fill=color, width=1)
+        self.mod = oval_mode
 
     def move(self, alpha):
-        canvas_canvasov.move(self.canv, - sin(alpha) * alpha * 0.3,
-                             - alpha * cos(alpha) * 0.3)
+        canvas_canvasov.move(self.canv, - sin(alpha) * alpha * self.mod,
+                             - alpha * cos(alpha) * self.mod)
 
     def get_x(self):
         oval_coords = canvas_canvasov.coords(self.canv)
@@ -120,13 +121,15 @@ def new_set():
 
     # new random number of balls
     for i in range(rnd(4, 12)):
-        balls.append(Ball(rnd(100, 700), rnd(100, 500), rnd(20, 40),
+        balls.append(Ball(rnd(0.1 * width, 0.9 * width), rnd(0.1 * height, 0.9 * height),
+                          rnd(0.03 * height, 0.06 * height),
                           choice(ball_colors), rnd(1, 5), rnd(1, 5)))
 
-    # new zero or some ovals
+    # new some ovals
     for i in range(rnd(1, 2)):
-        ovals.append(Oval(rnd(100, 700), rnd(100, 500), rnd(10, 20), rnd(10, 20),
-                          choice(oval_colors)))
+        ovals.append(Oval(rnd(0.1 * width, 0.9 * width), rnd(0.1 * height, 0.9 * height),
+                          rnd(0.02 * height, 0.03 * height), rnd(0.02 * height, 0.03 * height),
+                          choice(oval_colors), rnd(0.03 * height, 0.06 * height) / 100))
 
 
 def click(event):
@@ -145,11 +148,11 @@ def click(event):
         y, y1 = oval.get_y()
 
         if (x <= event.x <= x1) and (y <= event.y < y1):
-            number_of_wins += 15
+            number_of_wins += 5
 
     # updating scores table
     canvas_canvasov.delete('wins')
-    canvas_canvasov.create_text(100, 100, tag='wins',
+    canvas_canvasov.create_text(0.1 * width, 0.2 * height, tag='wins',
                                 text='meows: ' + str(number_of_wins))
 
     # if the score is big enough for best scores file
@@ -171,10 +174,10 @@ def writing_scores():
 
 def game_core():
     """ the main function of it all, 42 btw """
-    global how_long_the_same_set
+    global time_counter
 
-    if how_long_the_same_set > 800:
-        how_long_the_same_set = 0
+    if time_counter > 800:
+        time_counter = 0
         new_set()
 
     else:
@@ -183,9 +186,9 @@ def game_core():
             ball.move()
 
         for oval in ovals:
-            oval.move(how_long_the_same_set/30)
+            oval.move(time_counter / 30)
 
-        how_long_the_same_set += 1
+        time_counter += 1
 
     root.after(timer_time, game_core)
 
